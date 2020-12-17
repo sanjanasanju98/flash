@@ -1,0 +1,63 @@
+{
+  "testSuiteName": "CRM Balance Transfer",
+  "testSuiteDesc": "Test suite to execute all types of balance transfer.",
+  "testCases": [
+    {
+      "testCaseName": "CRM Balance Transfer",
+      "pageObject": "crmBalanceTransfer",
+      "testCaseDesc": "CRM test case to transfer balance from customer account to dealer acccount.",
+      "testData": [
+        {
+          "userName": "101551",
+          "password": "101551",
+          "accountNo": "210000025",
+          "amountToTransfer": "50"
+        },
+        {
+          "userName": "101551",
+          "password": "101551",
+          "accountNo": "210000024",
+          "amountToTransfer": "100"
+        }
+      ]
+    },
+    {
+      "testCaseName": "CRM Prepaid volte onboarding",
+      "pageObject": "prepaidVolteOnBoard",
+      "testCaseDesc": "CRM test case to onboarding prepaid volte customer in CRM.",
+      "testData": [
+        {
+          "userName": "101551",
+          "password": "101551",
+          "accountName": "Jeff R Smith2",
+          "customerType": "101551",
+          "serviceType": "Broadband",
+          "segment": "Prepaid",
+          "salutation": "Mr",
+          "firstName": "Darshan",
+          "lastName": "BS",
+          "dateOfBirth": "02-08-1990",
+          "primaryEmail": "dar@gmail.com",
+          "gender": "Male",
+          "mobileCode": "50",
+          "primaryMobile": "1234567890",
+          "secondaryEmail": "dar@gmail.com",
+          "maidenName": "NV",
+          "accountCategory": "Individual",
+          "billingAddress": "252 Moonlight Drive",
+          "billingCity": "OKLAHOMA CITY",
+          "billingState": "KR",
+          "accountStaus": "Prospect",
+          "accountSegment": "Prepaid",
+          "packageNo": "PKL_204",
+          "renewalPackageNo": "PKL_163",
+          "sim": "Available",
+          "paymentDate": "14-08-2020",
+          "paymentType": "Cash",
+          "assetStatus": "",
+          "inventoryStatus": ""
+        }
+      ]
+    }
+  ]
+}
