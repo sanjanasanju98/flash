@@ -58,7 +58,7 @@ public class PrepaidVolteOnBoard implements CrmGuiFactory {
     final List<Map<String, String>> dataSet = request.getTestData();
     
     // Looping through all given data set of balance transfer test case.
-    for (final Map<String,String> data : dataSet) {
+    for (final Map<String, String> data : dataSet) {
       try {  
        
         volteOnboard.onboradPrepaidVolteCustomer(doc, data);

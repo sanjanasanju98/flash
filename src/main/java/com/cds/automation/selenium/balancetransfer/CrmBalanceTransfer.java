@@ -66,6 +66,7 @@ public class CrmBalanceTransfer implements CrmGuiFactory {
                     .message("Balance transfer completed successfully.").result("success").build());
       } catch (Exception e) {
         
+
         dataResult.add(TestDataResults.builder().dataSet(data)
                               .error(e.getMessage()).result(UiConstantsUtil.FAILURE).build());
         failure.append(UiConstantsUtil.FAILURE);

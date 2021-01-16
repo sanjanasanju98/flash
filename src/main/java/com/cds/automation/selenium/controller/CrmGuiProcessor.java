@@ -17,6 +17,7 @@ import com.cds.automation.selenium.aspect.Loggable;
 import com.cds.automation.selenium.common.BaseClassHelper;
 import com.cds.automation.selenium.common.EvidenceDocument;
 import com.cds.automation.selenium.common.TestSuiteResultCreator;
+import com.cds.automation.selenium.constanats.UiConstantsUtil;
 import com.cds.automation.selenium.interfaces.CrmGuiFactory;
 import com.cds.automation.selenium.pojos.GuiTestSuite;
 import com.cds.automation.selenium.pojos.TestCases;
@@ -68,7 +69,8 @@ public class CrmGuiProcessor extends BaseClassHelper {
     } catch (Exception e) {
       
       log.error("Error occurred while creating evidence. {}",e.getMessage());
-      return testSuiteResult.createFailureResults(testSuite, e.getMessage());
+      return testSuiteResult.createFailureResults(
+                                   testSuite,testSuite.getTestCases().size(),0,0,e.getMessage());
     } // End of evidence document capture.
   } // End of balanceTransferMethod method.
   
@@ -81,8 +83,9 @@ public class CrmGuiProcessor extends BaseClassHelper {
   */
   private TestSuiteResults executeTestCaseWithEvidence(
                                           final XWPFDocument doc,final GuiTestSuite testSuite) {
+    int succeeded = 0;
+    int failed = 0;
     try {
-      
       // Adding header to the evidence document.
       evidence.createDocumentHeader(doc);
       
@@ -95,13 +98,20 @@ public class CrmGuiProcessor extends BaseClassHelper {
         final TestResults results = 
                           factory.executeRequest(doc,tc.getTestCaseName(), gson.toJson(tc));
         testResults.add(results);
+        if (UiConstantsUtil.FAILURE.equals(results.getStatus())) {
+          failed++;
+        } else {
+          succeeded++;
+        }
       }
-      return testSuiteResult.createSuccessResults(testSuite, testResults);
+      return testSuiteResult.createSuccessResults(
+                         testSuite, testResults,testSuite.getTestCases().size(),succeeded,failed);
       
     } catch (Exception e) {
     
       log.error(e.getMessage());
-      return testSuiteResult.createFailureResults(testSuite, e.getMessage());
+      return testSuiteResult.createFailureResults(
+                      testSuite,testSuite.getTestCases().size(),succeeded,failed,e.getMessage());
       
     } finally {
       // Saving the content both text and images to the evidence document.

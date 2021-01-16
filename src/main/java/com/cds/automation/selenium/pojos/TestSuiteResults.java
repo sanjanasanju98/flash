@@ -44,5 +44,13 @@ public class TestSuiteResults implements Serializable {
   
   private String error;
   
+  private int totalTestCases;
+  
+  private int totalSucceeded;
+  
+  private int totalFailed;
+  
+  private int totalBlocked;
+  
   private List<TestResults> testResults; 
 } // End of TestSuiteResults.

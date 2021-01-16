@@ -35,6 +35,10 @@ import lombok.NoArgsConstructor;
 public class TestData implements Serializable {
 
   private static final long serialVersionUID = 103859961589361665L;
+  
+  private String testDataName;
+  
+  private String testDataDescription;
 
-  private Map<String,String> dataSet; 
+  private Map<String,String> parameters; 
 } // End of TestData.

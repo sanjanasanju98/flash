@@ -39,7 +39,9 @@ public class TestCases implements Serializable {
 
   private String testCaseName; 
   
-  private String pageObject; 
+  private String pageObject;
+  
+  //private String scenarioName
   
   private String testCaseDesc; 
   

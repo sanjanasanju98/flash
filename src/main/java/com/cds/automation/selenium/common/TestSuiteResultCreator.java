@@ -35,19 +35,26 @@ public class TestSuiteResultCreator {
   /** The method will create success result of test suite. **/
   @Loggable
   public TestSuiteResults createSuccessResults(
-                           final GuiTestSuite testSuite,final List<TestResults> testResults) {
+                           final GuiTestSuite testSuite,final List<TestResults> testResults,
+                           final int totalTestCases,final int success,final int failed) {
     
     return TestSuiteResults.builder().testResults(testResults)
                            .testSuiteName(testSuite.getTestSuiteName())
-                           .testSuiteDesc(testSuite.getTestSuiteDesc()).build();
+                           .testSuiteDesc(testSuite.getTestSuiteDesc())
+                           .totalTestCases(totalTestCases).totalSucceeded(success)
+                           .totalFailed(failed).build();
   } // End of createDocumentHeader method.
   
   /** The method will create failure result of test suite. **/
   @Loggable
-  public TestSuiteResults createFailureResults(final GuiTestSuite testSuite,final String error) {
+  public TestSuiteResults createFailureResults(
+                                final GuiTestSuite testSuite,final int total,
+                                final int success,final int failed,final String error) {
     
     return TestSuiteResults.builder().status(UiConstantsUtil.FAILURE).error(error)
                            .testSuiteName(testSuite.getTestSuiteName())
+                           .totalTestCases(total).totalSucceeded(success).totalFailed(failed)
+                           .totalBlocked(total - success - failed)
                            .testSuiteDesc(testSuite.getTestSuiteDesc()).build();
   } // End of createFailureResults method.
   
