@@ -20,12 +20,12 @@ import com.cds.automation.selenium.common.TestSuiteResultCreator;
 import com.cds.automation.selenium.constanats.UiConstantsUtil;
 import com.cds.automation.selenium.interfaces.CrmGuiFactory;
 import com.cds.automation.selenium.pojos.GuiTestSuite;
-import com.cds.automation.selenium.pojos.TestCases;
 import com.cds.automation.selenium.pojos.TestResults;
 import com.cds.automation.selenium.pojos.TestSuiteResults;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,8 +83,9 @@ public class CrmGuiProcessor extends BaseClassHelper {
   */
   private TestSuiteResults executeTestCaseWithEvidence(
                                           final XWPFDocument doc,final GuiTestSuite testSuite) {
-    int succeeded = 0;
-    int failed = 0;
+    
+    final AtomicInteger succeeded = new AtomicInteger();
+    final AtomicInteger failed = new AtomicInteger();
     try {
       // Adding header to the evidence document.
       evidence.createDocumentHeader(doc);
@@ -92,26 +93,27 @@ public class CrmGuiProcessor extends BaseClassHelper {
       final List<TestResults> testResults = new ArrayList<>();
       
       // Looping through all test cases of the test suite.
-      for (final TestCases tc : testSuite.getTestCases()) {
+      testSuite.getTestCases().forEach(tc -> {
+     
         
         final CrmGuiFactory factory = (CrmGuiFactory) context.getBean(tc.getPageObject());
         final TestResults results = 
                           factory.executeRequest(doc,tc.getTestCaseName(), gson.toJson(tc));
         testResults.add(results);
         if (UiConstantsUtil.FAILURE.equals(results.getStatus())) {
-          failed++;
+          failed.incrementAndGet();
         } else {
-          succeeded++;
+          succeeded.incrementAndGet();
         }
-      }
+      });
       return testSuiteResult.createSuccessResults(
-                         testSuite, testResults,testSuite.getTestCases().size(),succeeded,failed);
+               testSuite, testResults,testSuite.getTestCases().size(),succeeded.get(),failed.get());
       
     } catch (Exception e) {
     
       log.error(e.getMessage());
       return testSuiteResult.createFailureResults(
-                      testSuite,testSuite.getTestCases().size(),succeeded,failed,e.getMessage());
+             testSuite,testSuite.getTestCases().size(),succeeded.get(),failed.get(),e.getMessage());
       
     } finally {
       // Saving the content both text and images to the evidence document.

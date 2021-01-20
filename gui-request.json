@@ -4,7 +4,7 @@
   "testCases": [
     {
       "testCaseName": "CRM Balance Transfer",
-      "pageObject": "crmBalanceTransfer",
+      "scenarioName": "crmBalanceTransfer",
       "testCaseDesc": "CRM test case to transfer balance from customer account to dealer acccount.",
       "testData": [
         {
@@ -23,7 +23,7 @@
     },
     {
       "testCaseName": "CRM Prepaid volte onboarding",
-      "pageObject": "prepaidVolteOnBoard",
+      "scenarioName": "prepaidVolteOnBoard",
       "testCaseDesc": "CRM test case to onboarding prepaid volte customer in CRM.",
       "testData": [
         {
