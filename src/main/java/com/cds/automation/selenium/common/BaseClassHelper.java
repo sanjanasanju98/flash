@@ -61,7 +61,7 @@ public class BaseClassHelper {
     final Properties prop = new Properties();
     try (InputStream ip =  Files.newInputStream(
                           Paths.get(System.getProperty("user.dir") 
-                              + "//Configuration//config.properties"))) {
+                              + "//configuration//config.properties"))) {
       prop.load(ip);
     } // End of inputstream.
 

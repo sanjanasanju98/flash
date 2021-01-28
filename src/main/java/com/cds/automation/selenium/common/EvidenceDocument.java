@@ -27,6 +27,9 @@ import org.apache.poi.xwpf.usermodel.Document;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,6 +41,9 @@ import org.springframework.stereotype.Component;
 @Log4j2
 @Component
 public class EvidenceDocument {
+  
+  @Autowired
+  private ResourceLoader resourceLoader;
 
   /** The method will create header for the evidence document. **/
   @Loggable
@@ -47,9 +53,9 @@ public class EvidenceDocument {
     final XWPFParagraph header = doc.createParagraph();
     final XWPFRun headerRun = header.createRun();
     
-    final Path imagePath =  
-          Paths.get("E:\\MyProjects\\RegressionSuite-RPA"
-                                         + "\\gui-selenium-services\\evidences\\header.png");
+    final Resource resource = resourceLoader.getResource("classpath:evidences/header.png");
+ 
+    final Path imagePath = Paths.get(resource.getFile().toURI());
     try (InputStream is = Files.newInputStream(imagePath)) {
       
       headerRun.addPicture(is,Document.PICTURE_TYPE_PNG, imagePath.getFileName().toString(),

@@ -26,7 +26,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.stereotype.Component;
 import org.testng.Assert;
 
 /**
@@ -36,8 +35,8 @@ import org.testng.Assert;
  * @version 1.0
 */
 @Log4j2
-@Component
-public class BalanceTransferPage extends BaseClassHelper {
+//@Component
+public class BalanceTransferPageBkp extends BaseClassHelper {
 
   @FindBy(xpath = "//li[@data-label-key='Balance Details']")
   private WebElement balanceDetailsIcon;
@@ -69,9 +68,6 @@ public class BalanceTransferPage extends BaseClassHelper {
 
   @FindBy(xpath = "//div[@class='summaryViewHeader ']/b")
   private WebElement customerBalance;
-  
-  @FindBy(id = "description")
-  private WebElement description;
 
   public void initPageFactory() {
     PageFactory.initElements(getDriver(), this);
@@ -106,7 +102,7 @@ public class BalanceTransferPage extends BaseClassHelper {
 
   /** The method will initiate balance transfer from deal wallet. **/
   public DealerWallet dealerWalletAmountTransfer(
-                      final String transferAmount,final String accntNum,final String desc) {
+                                        final String transferAmount,final String accntNum) {
     try {
       
       WebPageActionsUtil.click(getDriver(), dealerWallet);
@@ -122,8 +118,6 @@ public class BalanceTransferPage extends BaseClassHelper {
         Thread.sleep(2000);
         WebPageActionsUtil.type(accountField, accntNum);
         WebPageActionsUtil.type(amountField, transferAmount);
-        WebPageActionsUtil.type(description, desc);
-
         Thread.sleep(2000);
         WebPageActionsUtil.click(getDriver(), submitTransfer);
         LogUtil.info("Dealer Submit Transfer Button clicked.");
@@ -191,7 +185,7 @@ public class BalanceTransferPage extends BaseClassHelper {
       throw new CrmUiException(error.toString(),e);
     }
   } // End of customerBalanceBeforeTransfer method.
-  
+
   /** The method validate the amount in customer account after completion of balance transfer. **/
   public void validateCustomerBalanceAfterTransfer(
                                      final double dealerCurrentAmount,final long transferAmount) {

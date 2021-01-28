@@ -95,7 +95,7 @@ public class BalanceTransferProcessor extends BaseClassHelper {
       Thread.sleep(1000);
       final DealerWallet wallet = 
             balance.dealerWalletAmountTransfer(
-                          data.get("amountToTransfer"), data.get(UiConstantsUtil.ACCOUNTNO));
+                          data.get("amountToTransfer"), data.get(UiConstantsUtil.ACCOUNTNO),"");
       Thread.sleep(2000);
       
       balance.validateDealerBalAfterTransfer(
